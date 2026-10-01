@@ -1,0 +1,102 @@
+{
+  "theme": "dark",
+  "archetype": "ARCHETYPE 4: SWISS & HIGH-CONTRAST",
+  "colors": {
+    "background": "#050505",
+    "surface": "#111111",
+    "surface_hover": "#1C1C1E",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#A1A1AA",
+    "accent": "#2997FF",
+    "border": "#27272A",
+    "rules": [
+      "No full-screen gradients. Keep background purely black/dark grey.",
+      "Use #2997FF ONLY for active states, small text links, or subtle hover highlights.",
+      "Ensure text over any media maintains 4.5:1 contrast using gradients or scrims."
+    ]
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Outfit",
+      "body": "Manrope",
+      "mono": "JetBrains Mono"
+    },
+    "hierarchy": {
+      "h1": "text-5xl sm:text-7xl lg:text-[10vw] font-black tracking-tighter leading-none uppercase",
+      "h2": "text-4xl sm:text-5xl font-bold tracking-tight",
+      "h3": "text-2xl sm:text-3xl font-medium",
+      "body": "text-base sm:text-lg text-[#A1A1AA] leading-relaxed",
+      "label": "text-xs font-mono uppercase tracking-[0.2em] text-[#A1A1AA]"
+    },
+    "rules": [
+      "Headings must use tight letter spacing (tracking-tight or tighter).",
+      "Overlines and small labels must be Uppercase, Mono, and widely spaced.",
+      "Never center align body text. Keep reading patterns natural (left-aligned)."
+    ]
+  },
+  "layouts": {
+    "hero": "Full height (min-h-screen). Asymmetrical layout with massive kinetic text on the left/center and a subtle floating/parallax abstract visual on the right. Must include an on-load masked line-by-line reveal for the headline.",
+    "showreel": "Container with massive horizontal padding. The video frame starts clipped (small) and scales up to 100% width on scroll using Framer Motion.",
+    "about": "Asymmetrical Grid. A column for 'Numbered Manifesto Chapters' (01, 02, 03) paired with large, bold statements. Ample negative space (gap-16 to gap-24).",
+    "projects": "Filterable gallery. A sticky header or sidebar for categories (Motion Graphics, Video Editing -> sub-categories). Project items should be large bento-style cards or full-width list items with cinematic poster images and hover-to-reveal interactions.",
+    "marquee": "Full-width, extremely slow-moving editorial marquee for client logos. Low contrast (dark grey on black).",
+    "contact": "Massive typography 'LET'S TALK' at the top. Split layout: Left side with direct info (Discord, Email), Right side with a clean, minimal Shadcn-based form with custom dark styling.",
+    "spacing": "Generous spacing. Use py-24 or py-32 for section padding. Container should use px-6 md:px-12 lg:px-24."
+  },
+  "components": {
+    "buttons": "Pill-shaped (rounded-full) or sharp rectangular. 1px border border-[#27272A]. Hover state fills with white and inverts text to black. Accent buttons can use #2997FF.",
+    "project_card": "Cardless or extremely subtle 1px border. The focus is the video thumbnail. On hover: scale image slightly, dim overlay, reveal 'Play' icon or title.",
+    "filters": "Pill-shaped toggle buttons. Active state: bg-white text-black. Inactive: text-[#A1A1AA] hover:text-white.",
+    "navigation": "Crystal Glassmorphism: backdrop-blur-xl bg-[#050505]/60, 1px bottom border border-white/10. Fixed to top. Logo on left, links center, 'Let's Talk' CTA right.",
+    "video_player": "Standard iframe for YouTube/Vimeo, but wrapped in a container with a custom minimal poster image. Ensure 16:9 aspect ratio (aspect-video)."
+  },
+  "motion": {
+    "libraries": ["framer-motion", "lenis"],
+    "interactions": [
+      "Lenis smooth momentum scrolling is MANDATORY.",
+      "On-load: Line-by-line text reveal for Hero H1 using Framer Motion (overflow-hidden wrapper, y: 100% to 0%).",
+      "Scroll: Showreel video container scales from 80% to 100% width on scroll.",
+      "Hover: Project cards have a subtle scale (1.02) and image reveal.",
+      "Micro: Custom cursor (optional, but a subtle dot that expands on hover adds to the Apple feel)."
+    ]
+  },
+  "media": {
+    "image_urls": {
+      "client_logos": [
+        "https://images.pexels.com/photos/35218953/pexels-photo-35218953.jpeg",
+        "https://images.pexels.com/photos/28792027/pexels-photo-28792027.jpeg"
+      ],
+      "abstract_decorations": [
+        "https://images.unsplash.com/photo-1733723518099-988dcbc2dc44?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1725981934390-d9bc9807ae31?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ],
+      "video_placeholders": [
+        "https://images.unsplash.com/photo-1760915383853-57e5ebfd1c7e?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1432250681869-3784e3d5a99f?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1675104236783-a1fd9f5a38cc?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ]
+    },
+    "rules": [
+      "Images must be wrapped in overflow-hidden containers.",
+      "Never use bare <img> tags for decorative images; always style them with object-cover.",
+      "Apply grayscale or black/white filters to logos."
+    ]
+  },
+  "accessibility": {
+    "guidelines": [
+      "All interactive elements MUST include a data-testid attribute.",
+      "Ensure proper aria-labels on icon buttons and video players.",
+      "Use sr-only classes for visually hidden labels on the contact form."
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Build a single-page hybrid fullstack app focusing entirely on motion and aesthetics.",
+    "Use Framer Motion heavily for the hero line-by-line reveal, showreel clipping, and project card hovers.",
+    "Implement Lenis for smooth scrolling.",
+    "Use Shadcn UI for the Contact Form and Dropdowns, overriding the styling to match the dark Apple-minimal theme.",
+    "Ensure the Projects section has a working filter state (Motion Graphics vs Video Editing -> Subcategories).",
+    "Use react-fast-marquee for the client logos section.",
+    "Do NOT center-align the main App container.",
+    "Embed actual placeholder iframes (e.g., standard YouTube embed links) for the video projects, masked behind the cinematic video placeholders."
+  ]
+}

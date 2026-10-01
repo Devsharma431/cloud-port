@@ -1,0 +1,21 @@
+.App {
+  cursor: none;
+}
+
+a,
+button,
+[data-cursor] {
+  cursor: none;
+}
+
+/* Mobile + touch devices: restore native cursor / touch behaviour */
+@media (max-width: 767px), (hover: none), (pointer: coarse) {
+  .App {
+    cursor: auto;
+  }
+  a,
+  button,
+  [data-cursor] {
+    cursor: pointer;
+  }
+}
