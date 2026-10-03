@@ -1,4 +1,4 @@
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = '/api';
 
 // POST json to an SSE endpoint and invoke onDelta for each text chunk.
 // Resolves with the full text; rejects with an Error carrying a user-facing message.

@@ -4,7 +4,7 @@ import { Sparkles, X, ArrowUp } from "lucide-react";
 import { streamSSE } from "../lib/sse";
 import { ChatMessage } from "./ChatMessage";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = '/api';
 const SESSION_KEY = "cloud-chat-session";
 const SUGGESTIONS = [
   "How long does a short-form edit take?",

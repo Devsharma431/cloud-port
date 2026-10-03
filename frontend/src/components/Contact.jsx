@@ -10,7 +10,7 @@ import { PROFILE } from "../data/portfolio";
 import { streamSSE } from "../lib/sse";
 import { FileDropzone } from "./FileDropzone";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = '/api';
 const TYPES = ["Motion Graphics", "Gaming", "Reaction", "IRL", "Vlogs", "Podcast", "Other"];
 const BUDGETS = ["Below 100$", "Below 500$", "Below 1000$", "1000$ or more"];
 
