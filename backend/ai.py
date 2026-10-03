@@ -143,7 +143,7 @@ def _build_gemini_history(history: list[dict], system_prompt: str) -> list[dict]
     return messages
 
 
-async def _stream_gemini(model_name: str, messages: list[dict], system_prompt: str = ""):
+def _stream_gemini(model_name: str, messages: list[dict], system_prompt: str = ""):
     """Stream response from Gemini."""
     model = genai.GenerativeModel(model_name, system_instruction=system_prompt if system_prompt else None)
     chat = model.start_chat(history=messages[:-1])
@@ -178,7 +178,7 @@ def register(db):
         async def gen():
             full = ""
             try:
-                async for chunk_text in _stream_gemini(GEMINI_MODEL, gemini_history, KNOWLEDGE):
+                for chunk_text in _stream_gemini(GEMINI_MODEL, gemini_history, KNOWLEDGE):
                     full += chunk_text
                     yield _sse({"delta": chunk_text})
             except Exception as e:
@@ -211,7 +211,7 @@ def register(db):
         async def gen():
             try:
                 messages = [{"role": "user", "parts": [prompt]}]
-                async for chunk_text in _stream_gemini(GEMINI_MODEL, messages, BRIEF_SYSTEM):
+                for chunk_text in _stream_gemini(GEMINI_MODEL, messages, BRIEF_SYSTEM):
                     yield _sse({"delta": chunk_text})
             except Exception as e:
                 logger.error(f"Gemini brief error: {e}")
