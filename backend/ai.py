@@ -161,21 +161,40 @@ def register(db):
 
     @router.post("/chat")
     async def chat(body: ChatIn, request: Request):
-        _rate_limit(request)
-        history = await db.chat_messages.find(
-            {"session_id": body.session_id}, {"_id": 0, "role": 1, "content": 1}
-        ).sort("created_at", -1).to_list(HISTORY_TURNS * 2)
-        history.reverse()
-
-        now = datetime.now(timezone.utc).isoformat()
-        await db.chat_messages.insert_one(
-            {"session_id": body.session_id, "role": "user", "content": body.message, "created_at": now}
-        )
-
-        gemini_history = _build_gemini_history(history, KNOWLEDGE)
-        gemini_history.append({"role": "user", "parts": [body.message]})
-
         async def gen():
+            try:
+                _rate_limit(request)
+            except HTTPException as e:
+                yield _sse({"error": e.detail})
+                return
+            except Exception as e:
+                logger.error(f"Rate limit error: {e}")
+                yield _sse({"error": "Rate limit error."})
+                return
+
+            try:
+                history = await db.chat_messages.find(
+                    {"session_id": body.session_id}, {"_id": 0, "role": 1, "content": 1}
+                ).sort("created_at", -1).to_list(HISTORY_TURNS * 2)
+                history.reverse()
+            except Exception as e:
+                logger.error(f"DB history fetch error: {e}")
+                yield _sse({"error": "Failed to load chat history."})
+                return
+
+            now = datetime.now(timezone.utc).isoformat()
+            try:
+                await db.chat_messages.insert_one(
+                    {"session_id": body.session_id, "role": "user", "content": body.message, "created_at": now}
+                )
+            except Exception as e:
+                logger.error(f"DB insert user message error: {e}")
+                yield _sse({"error": "Failed to save message."})
+                return
+
+            gemini_history = _build_gemini_history(history, KNOWLEDGE)
+            gemini_history.append({"role": "user", "parts": [body.message]})
+
             full = ""
             try:
                 for chunk_text in _stream_gemini(GEMINI_MODEL, gemini_history, KNOWLEDGE):
@@ -186,29 +205,41 @@ def register(db):
                 yield _sse({"error": "The assistant is unavailable right now. Please use the contact form or Discord."})
                 return
             if full:
-                await db.chat_messages.insert_one(
-                    {
-                        "session_id": body.session_id,
-                        "role": "assistant",
-                        "content": full,
-                        "created_at": datetime.now(timezone.utc).isoformat(),
-                    }
-                )
+                try:
+                    await db.chat_messages.insert_one(
+                        {
+                            "session_id": body.session_id,
+                            "role": "assistant",
+                            "content": full,
+                            "created_at": datetime.now(timezone.utc).isoformat(),
+                        }
+                    )
+                except Exception as e:
+                    logger.error(f"DB insert assistant message error: {e}")
             yield _sse({"done": True})
 
         return _stream_response(gen())
 
     @router.post("/brief")
     async def brief(body: BriefIn, request: Request):
-        _rate_limit(request)
-        context = []
-        if body.project_type:
-            context.append(f"Project type selected: {body.project_type}")
-        if body.budget:
-            context.append(f"Budget selected: {body.budget}")
-        prompt = ("\n".join(context) + "\n\n" if context else "") + f"Client's rough idea:\n{body.idea}"
-
         async def gen():
+            try:
+                _rate_limit(request)
+            except HTTPException as e:
+                yield _sse({"error": e.detail})
+                return
+            except Exception as e:
+                logger.error(f"Rate limit error: {e}")
+                yield _sse({"error": "Rate limit error."})
+                return
+
+            context = []
+            if body.project_type:
+                context.append(f"Project type selected: {body.project_type}")
+            if body.budget:
+                context.append(f"Budget selected: {body.budget}")
+            prompt = ("\n".join(context) + "\n\n" if context else "") + f"Client's rough idea:\n{body.idea}"
+
             try:
                 messages = [{"role": "user", "parts": [prompt]}]
                 for chunk_text in _stream_gemini(GEMINI_MODEL, messages, BRIEF_SYSTEM):
