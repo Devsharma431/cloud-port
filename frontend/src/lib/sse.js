@@ -10,11 +10,12 @@ export async function streamSSE(path, body, onDelta, signal) {
     signal,
   });
   if (!res.ok) {
-    let detail = "Request failed";
+    let detail = `Request failed (${res.status})`;
     try {
-      detail = (await res.json()).detail || detail;
+      const err = await res.json();
+      detail = err.detail || err.message || JSON.stringify(err);
     } catch {
-      /* ignore */
+      try { detail = await res.text(); } catch {}
     }
     throw new Error(detail);
   }
