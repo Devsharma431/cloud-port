@@ -204,7 +204,7 @@ def register(db):
                     yield _sse({"delta": chunk_text})
             except Exception as e:
                 logger.error(f"Gemini chat error: {e}")
-                yield _sse({"error": "The assistant is unavailable right now. Please use the contact form or Discord."})
+                yield _sse({"error": f"Gemini error: {e}"})
                 return
             if full:
                 try:
@@ -248,7 +248,7 @@ def register(db):
                     yield _sse({"delta": chunk_text})
             except Exception as e:
                 logger.error(f"Gemini brief error: {e}")
-                yield _sse({"error": "Couldn't polish the brief right now. You can still send your message as is."})
+                yield _sse({"error": f"Gemini brief error: {e}"})
                 return
             yield _sse({"done": True})
 
