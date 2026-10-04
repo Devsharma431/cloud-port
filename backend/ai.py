@@ -13,7 +13,9 @@ import google.generativeai as genai
 
 logger = logging.getLogger(__name__)
 
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY environment variable is not set. Add it in Vercel backend env vars.")
 GEMINI_MODEL = "gemini-1.5-flash"
 
 genai.configure(api_key=GEMINI_API_KEY)
