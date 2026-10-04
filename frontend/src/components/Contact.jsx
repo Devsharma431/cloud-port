@@ -82,7 +82,8 @@ export const Contact = () => {
       setOriginal(null);
       setFiles([]);
     } catch (err) {
-      toast.error("Something went wrong. Try Discord instead.");
+      const msg = err?.response?.data?.detail || err?.message || "Something went wrong. Try Discord instead.";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
