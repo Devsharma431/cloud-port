@@ -205,21 +205,27 @@ async def get_profile():
 
 @api_router.post("/contact", response_model=Contact)
 async def create_contact(input: ContactCreate, request: Request):
-    files = []
-    if input.attachments:
-        recs = await db.files.find({"id": {"$in": input.attachments}, "is_deleted": False}, {"_id": 0}).to_list(10)
-        if len(recs) != len(set(input.attachments)):
-            raise HTTPException(status_code=400, detail="One or more attachments could not be found.")
-        files = [
-            {"name": r["original_filename"], "kind": r["kind"], "size": r["size"], "url": file_url(request, r["id"])}
-            for r in recs
-        ]
-    contact = Contact(**input.model_dump())
-    await db.contacts.insert_one(contact.model_dump())
-    emailed = await send_owner_email(input, files)
-    if not emailed:
-        raise HTTPException(status_code=502, detail="Message saved but email delivery failed.")
-    return contact
+    try:
+        files = []
+        if input.attachments:
+            recs = await db.files.find({"id": {"$in": input.attachments}, "is_deleted": False}, {"_id": 0}).to_list(10)
+            if len(recs) != len(set(input.attachments)):
+                raise HTTPException(status_code=400, detail="One or more attachments could not be found.")
+            files = [
+                {"name": r["original_filename"], "kind": r["kind"], "size": r["size"], "url": file_url(request, r["id"])}
+                for r in recs
+            ]
+        contact = Contact(**input.model_dump())
+        await db.contacts.insert_one(contact.model_dump())
+        emailed = await send_owner_email(input, files)
+        if not emailed:
+            raise HTTPException(status_code=502, detail="Message saved but email delivery failed.")
+        return contact
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Contact creation failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {e}")
 
 
 @api_router.get("/contact", response_model=List[Contact])
