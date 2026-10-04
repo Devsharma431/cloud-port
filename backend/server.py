@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import httpx
+import certifi
 from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
@@ -22,7 +23,7 @@ from storage import register as register_storage, init_storage, file_url  # noqa
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(mongo_url, tlsCAFile=certifi.where())
 db = client[os.environ['DB_NAME']]
 
 # Email (Emergent managed Resend proxy)
