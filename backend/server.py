@@ -144,25 +144,52 @@ def _assert_safe_email(html: str) -> None:
 async def send_owner_email(payload: ContactCreate, files: list[dict]):
     html = build_contact_email(payload, files)
     _assert_safe_email(html)
-    body = {
-        "to": [OWNER_EMAIL],
-        "subject": f"New portfolio enquiry from {payload.name}",
-        "html": html,
-        "from_name": EMAIL_FROM_NAME,
-        "contact_email": payload.email,
-    }
-    try:
-        async with httpx.AsyncClient(timeout=30) as http_client:
-            resp = await http_client.post(
-                f"{EMAIL_BASE_URL}/api/v1/email/send",
-                headers={"X-Email-Key": EMAIL_KEY},
-                json=body,
-            )
-        resp.raise_for_status()
-        return True
-    except Exception as e:
-        logger.error(f"Contact email send failed: {str(e)}")
-        return False
+
+    # Try Resend first if API key provided
+    resend_key = os.environ.get("RESEND_API_KEY")
+    if resend_key:
+        body = {
+            "from": f"{EMAIL_FROM_NAME} <onboarding@resend.dev>",
+            "to": [OWNER_EMAIL],
+            "subject": f"New portfolio enquiry from {payload.name}",
+            "html": html,
+            "reply_to": payload.email,
+        }
+        try:
+            async with httpx.AsyncClient(timeout=30) as http_client:
+                resp = await http_client.post(
+                    "https://api.resend.com/emails",
+                    headers={"Authorization": f"Bearer {resend_key}", "Content-Type": "application/json"},
+                    json=body,
+                )
+            resp.raise_for_status()
+            return True
+        except Exception as e:
+            logger.error(f"Resend email send failed: {e}")
+
+    # Fallback to Emergent proxy
+    emergent_key = os.environ.get("EMERGENT_EMAIL_KEY")
+    if emergent_key:
+        body = {
+            "to": [OWNER_EMAIL],
+            "subject": f"New portfolio enquiry from {payload.name}",
+            "html": html,
+            "from_name": EMAIL_FROM_NAME,
+            "contact_email": payload.email,
+        }
+        try:
+            async with httpx.AsyncClient(timeout=30) as http_client:
+                resp = await http_client.post(
+                    f"{EMAIL_BASE_URL}/api/v1/email/send",
+                    headers={"X-Email-Key": emergent_key},
+                    json=body,
+                )
+            resp.raise_for_status()
+            return True
+        except Exception as e:
+            logger.error(f"Emergent email send failed: {e}")
+
+    return False
 
 
 # Routes
