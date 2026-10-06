@@ -33,20 +33,30 @@ export const Cursor = () => {
       raf = requestAnimationFrame(loop);
     };
     const over = (e) => {
-      if (e.target.closest("a, button, [data-cursor]")) ring?.classList.add("hovered");
+      const target = e.target.closest("a, button, [data-cursor], iframe, .group");
+      if (target) {
+        ring?.classList.add("hovered");
+        if (target.closest(".group") || target.tagName === "IFRAME") {
+          ring?.classList.add("video-hover");
+        }
+      }
     };
     const out = (e) => {
-      if (e.target.closest("a, button, [data-cursor]")) ring?.classList.remove("hovered");
+      const target = e.target.closest("a, button, [data-cursor], iframe, .group");
+      if (target) {
+        ring?.classList.remove("hovered");
+        ring?.classList.remove("video-hover");
+      }
     };
 
     window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", over);
-    window.addEventListener("mouseout", out);
+    window.addEventListener("mouseover", over, true);
+    window.addEventListener("mouseout", out, true);
     raf = requestAnimationFrame(loop);
     return () => {
       window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseover", over);
-      window.removeEventListener("mouseout", out);
+      window.removeEventListener("mouseover", over, true);
+      window.removeEventListener("mouseout", out, true);
       cancelAnimationFrame(raf);
     };
   }, [enabled]);

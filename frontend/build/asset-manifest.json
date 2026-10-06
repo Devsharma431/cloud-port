@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.e4ac11ab.css",
-    "main.js": "/static/js/main.adc051bd.js",
+    "main.css": "/static/css/main.ad8e86ad.css",
+    "main.js": "/static/js/main.40e8fc85.js",
     "static/media/Redhawk.otf": "/static/media/Redhawk.74a72e0e6e175d7e5075.otf",
     "static/media/Redhawk.woff": "/static/media/Redhawk.44638be763c26c7437ba.woff",
     "index.html": "/index.html",
-    "main.e4ac11ab.css.map": "/static/css/main.e4ac11ab.css.map",
-    "main.adc051bd.js.map": "/static/js/main.adc051bd.js.map"
+    "main.ad8e86ad.css.map": "/static/css/main.ad8e86ad.css.map",
+    "main.40e8fc85.js.map": "/static/js/main.40e8fc85.js.map"
   },
   "entrypoints": [
-    "static/css/main.e4ac11ab.css",
-    "static/js/main.adc051bd.js"
+    "static/css/main.ad8e86ad.css",
+    "static/js/main.40e8fc85.js"
   ]
 }
