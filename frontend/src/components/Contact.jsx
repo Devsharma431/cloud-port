@@ -7,7 +7,6 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { PROFILE } from "../data/portfolio";
-import { FileDropzone } from "./FileDropzone";
 
 const API = '/api';
 const TYPES = ["Motion Graphics", "Gaming", "Reaction", "IRL", "Vlogs", "Podcast", "Other"];
@@ -17,7 +16,6 @@ export const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", project_type: "", budget: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [files, setFiles] = useState([]);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -28,25 +26,17 @@ export const Contact = () => {
     setTimeout(() => setCopied(false), 1800);
   };
 
-  const uploading = files.some((f) => f.status === "uploading");
-
   const submit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast.error("Please fill in name, email and message.");
       return;
     }
-    if (uploading) {
-      toast.error("Please wait for attachments to finish uploading.");
-      return;
-    }
     setLoading(true);
     try {
-      const attachments = files.filter((f) => f.status === "done").map((f) => f.id);
-      await axios.post(`${API}/contact`, { ...form, attachments });
+      await axios.post(`${API}/contact`, { ...form });
       toast.success("Message sent — I'll get back to you soon.");
       setForm({ name: "", email: "", project_type: "", budget: "", message: "" });
-      setFiles([]);
     } catch (err) {
       const msg = err?.response?.data?.detail || err?.message || "Something went wrong. Try Discord instead.";
       toast.error(msg);
@@ -133,18 +123,14 @@ export const Contact = () => {
             <label htmlFor="message" className="font-mono text-xs uppercase tracking-[0.15em] text-[#a1a1aa]">Message</label>
             <Textarea id="message" data-testid="contact-message" value={form.message} onChange={(e) => set("message", e.target.value)} placeholder="Tell me about the project..." rows={6} className="bg-[#111] border-white/15 rounded-xl resize-none focus-visible:ring-[#2997FF]" />
           </div>
-          <div className="md:col-span-2 flex flex-col gap-2">
-            <label className="font-mono text-xs uppercase tracking-[0.15em] text-[#a1a1aa]">Attachments <span className="text-[#71717a]">(optional)</span></label>
-            <FileDropzone items={files} onChange={setFiles} disabled={loading} />
-          </div>
           <button
             type="submit"
-            disabled={loading || uploading}
+            disabled={loading}
             data-testid="contact-submit"
             data-cursor
             className="md:col-span-2 group inline-flex items-center justify-center gap-3 rounded-full bg-white text-black px-8 py-4 font-medium hover:bg-[#2997FF] hover:text-white transition-colors duration-300 disabled:opacity-60"
           >
-            {loading ? "Sending…" : uploading ? "Uploading attachments…" : "Send message"}
+            {loading ? "Sending…" : "Send message"}
             <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </form>
