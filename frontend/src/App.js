@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import "@/App.css";
 import { Toaster } from "sonner";
+import { Cursor } from "./components/Cursor";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
@@ -41,6 +42,7 @@ function App() {
   return (
     <div className="App bg-[#050505] text-white font-body min-h-screen relative">
       <div className="grain" />
+      <Cursor />
       <Toaster theme="dark" position="bottom-left" richColors />
       <Navbar onNavigate={navigate} />
       <main>
