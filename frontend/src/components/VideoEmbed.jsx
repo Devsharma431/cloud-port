@@ -1,6 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Play, Volume2, VolumeX } from "lucide-react";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 
 const IFRAME_ALLOW = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
 
@@ -21,8 +20,6 @@ const sourceLabel = (v) => {
 export const VideoEmbed = ({ video, index }) => {
   const isDrive = video.source === "drive";
   const driveLink = isDrive ? `https://drive.google.com/file/d/${video.fileId}/view?usp=sharing` : null;
-  const [isHovered, setIsHovered] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
 
   return (
     <motion.article
@@ -30,14 +27,12 @@ export const VideoEmbed = ({ video, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.06 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
       data-testid={`video-card-${video.id}`}
-      className="mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#111] overflow-hidden group"
+      className="mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#111] overflow-hidden"
     >
       <div className={`relative w-full bg-black ${RATIO_CLASS[video.ratio]} overflow-hidden`}>
         <iframe
-          className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-[1.02]"
+          className="absolute inset-0 h-full w-full"
           src={SRC[video.source](video)}
           title={`${video.sub} — ${sourceLabel(video)}`}
           loading="lazy"
@@ -46,30 +41,6 @@ export const VideoEmbed = ({ video, index }) => {
           referrerPolicy="strict-origin-when-cross-origin"
           data-testid={`video-iframe-${video.id}`}
         />
-
-        {/* Hover overlay with play button */}
-        <AnimatePresence mode="popLayout">
-          {isHovered && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center pointer-events-none"
-            >
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative z-10 flex items-center justify-center gap-2 rounded-full bg-white/90 px-6 py-3 text-black font-medium text-sm transition-all duration-200 hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-                onClick={() => {}}
-                style={{ pointerEvents: "auto" }}
-              >
-                <Play size={18} />
-                <span className="font-mono text-xs uppercase tracking-wider">Play</span>
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Category badge */}
         <motion.div
@@ -109,7 +80,6 @@ export const VideoEmbed = ({ video, index }) => {
             target="_blank"
             rel="noopener noreferrer"
             data-testid={`video-drive-link-${video.id}`}
-            data-cursor
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[#a1a1aa] hover:border-[#2997FF] hover:text-[#2997FF] transition-colors"
           >
             Open in Drive <ExternalLink size={12} />
