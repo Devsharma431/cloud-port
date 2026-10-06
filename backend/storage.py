@@ -33,8 +33,6 @@ ALLOWED = {
     "video/x-matroska": (100 * MB, "video"),
 }
 
-_upload_sessions = {}
-
 class UploadInit(BaseModel):
     filename: str = Field(min_length=1, max_length=200)
     content_type: str
@@ -64,7 +62,8 @@ def register(db):
             raise HTTPException(status_code=413, detail=f"{'Videos' if kind == 'video' else 'Images and PDFs'} must be under {limit // MB} MB.")
         
         upload_id = str(uuid.uuid4())
-        _upload_sessions[upload_id] = {
+        await db.upload_sessions.insert_one({
+            "upload_id": upload_id,
             "filename": body.filename,
             "content_type": body.content_type,
             "size": body.size,
@@ -72,12 +71,12 @@ def register(db):
             "chunks": [],
             "received": 0,
             "created_at": datetime.now(timezone.utc).isoformat(),
-        }
+        })
         return {"upload_id": upload_id, "chunk_size": 4 * MB}
 
     @router.put("/uploads/{upload_id}/chunk")
     async def upload_chunk(upload_id: str, request: Request):
-        session = _upload_sessions.get(upload_id)
+        session = await db.upload_sessions.find_one({"upload_id": upload_id})
         if not session:
             raise HTTPException(status_code=404, detail="Upload not found or expired.")
         
@@ -87,13 +86,15 @@ def register(db):
         if session["received"] + len(data) > session["size"]:
             raise HTTPException(status_code=413, detail="Upload exceeds declared size.")
         
-        session["chunks"].append(data)
-        session["received"] += len(data)
-        return {"received": session["received"], "size": session["size"]}
+        await db.upload_sessions.update_one(
+            {"upload_id": upload_id},
+            {"$push": {"chunks": data}, "$inc": {"received": len(data)}}
+        )
+        return {"received": session["received"] + len(data), "size": session["size"]}
 
     @router.post("/uploads/{upload_id}/complete", response_model=FileOut)
     async def upload_complete(upload_id: str):
-        session = _upload_sessions.get(upload_id)
+        session = await db.upload_sessions.find_one({"upload_id": upload_id})
         if not session:
             raise HTTPException(status_code=404, detail="Upload not found or expired.")
         if session["received"] != session["size"]:
@@ -118,7 +119,7 @@ def register(db):
             logger.error(f"Vercel Blob upload failed: {e}")
             raise HTTPException(status_code=502, detail="Could not store the file. Please try again.")
         finally:
-            del _upload_sessions[upload_id]
+            await db.upload_sessions.delete_one({"upload_id": upload_id})
         
         file_id = str(uuid.uuid4())
         await db.files.insert_one(
