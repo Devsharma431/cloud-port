@@ -52,7 +52,7 @@ export const SERVICES = [
   "Long form Editing", "Short form editing", "Motion graphics", "UI animation", "Sound Design",
 ];
 
-export const TOOLS = ["After Effects", "Premiere Pro", "Photoshop", "Adobe Podcast", "Topaz", "Audacity", "Canva", "Frame.io"];
+export const TOOLS = ["After Effects", "Higgsfield", "Premiere Pro", "Photoshop", "Adobe Podcast", "Topaz", "Audacity", "Canva", "Frame.io"];
 
 // Category structure
 export const MOTION_SUBS = ["All", "SaaS and UI", "Mograph Edits", "Story Telling Edits"];
