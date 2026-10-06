@@ -18,8 +18,7 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-from ai import register as register_ai  # noqa: E402
-from storage import register as register_storage, init_storage, file_url  # noqa: E402
+from storage import register as register_storage, file_url  # noqa: E402
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -255,7 +254,6 @@ async def get_status_checks():
 
 # Include the router in the main app
 app.include_router(api_router)
-app.include_router(register_ai(db))
 app.include_router(register_storage(db))
 
 app.add_middleware(
@@ -274,11 +272,7 @@ logging.basicConfig(
 
 @app.on_event("startup")
 async def startup_storage():
-    try:
-        init_storage()
-        logger.info("Storage initialized")
-    except Exception as e:  # noqa: BLE001
-        logger.error(f"Storage init failed: {e}")
+    logger.info("Storage initialized (Vercel Blob)")
 
 
 @app.on_event("shutdown")

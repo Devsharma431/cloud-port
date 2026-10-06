@@ -6,6 +6,21 @@ export const PROFILE = {
   discord: "_cloudx1",
   email: "cloudcreates7@gmail.com",
   ytjobs: "https://ytjobs.co/talent/profile/638933",
+  age: 19,
+  basedIn: "India",
+  languages: ["Hindi", "English"],
+  availability: "Available for projects or as full-time video editor",
+  timelines: {
+    motionGraphics: "1 week",
+    longForm20minPlus: "1 week",
+    longForm10minPlus: "4-5 days",
+    shortForm: "2-3 days",
+  },
+  pricing: {
+    policy: "50% payment in advance before work starts; the rest on delivery",
+    methods: ["PayPal", "Wise", "UPI", "Direct Bank Transfer"],
+    tiers: ["Below $100", "Below $500", "Below $1000", "$1000 or more"],
+  },
 };
 
 export const STATS = [

@@ -1,0 +1,81 @@
+{
+  "knowledge": [
+    {
+      "keywords": ["rate", "price", "cost", "budget", "charge", "fee", "expensive", "cheap", "quote"],
+      "answer": "My rates depend on the project scope and complexity. Budget tiers on the contact form: Below $100, Below $500, Below $1000, $1000 or more. Exact quotes depend on length, style and deadline — share details via the contact form for a quote. Policy: 50% payment in advance before work starts; the rest on delivery. Payment accepted through PayPal, Wise, UPI, or direct bank transfer."
+    },
+    {
+      "keywords": ["timeline", "time", "long", "duration", "week", "day", "fast", "quick", "speed", "delivery"],
+      "answer": "Typical delivery timelines: Motion graphics video — about 1 week. Long form editing: 20min+ video about 1 week; 10min+ video about 4-5 days. Short form: 2-3 days. These can vary with scope."
+    },
+    {
+      "keywords": ["available", "availability", "full.time", "fulltime", "hire", "job", "work", "freelance", "full time"],
+      "answer": "Yes! I'm available for both one-off projects AND as a full-time video editor. I work remotely worldwide. Usually online from about 2-3 PM to 6-7 AM IST (India Standard Time). Fastest replies on Discord: _cloudx1"
+    },
+    {
+      "keywords": ["skill", "service", "edit", "motion", "graphic", "ui", "animation", "sound", "design", "what do you do"],
+      "answer": "Services: Long form editing, Short form editing (Shorts/Reels/TikTok), Motion graphics, UI animation, Sound design. Motion graphics styles: SaaS and UI animation, Mograph edits, Story-telling edits. Video editing styles: Long form, Short form, Phonk style edits. Common project types: Motion Graphics, Gaming, Reaction, IRL, Vlogs, Podcast."
+    },
+    {
+      "keywords": ["tool", "software", "program", "after effect", "premiere", "photoshop", "canva", "frame.io", "audacity", "topaz"],
+      "answer": "Tools I use: After Effects, Premiere Pro, Photoshop, Adobe Podcast, Topaz, Audacity, Canva, Frame.io."
+    },
+    {
+      "keywords": ["language", "hindi", "english", "speak", "communicate"],
+      "answer": "I speak Hindi and English fluently."
+    },
+    {
+      "keywords": ["age", "old", "young", "19", "year"],
+      "answer": "I'm 19 years old, based in India, working remotely worldwide."
+    },
+    {
+      "keywords": ["experience", "project", "client", "view", "stat", "80", "30m", "20"],
+      "answer": "Stats: 80+ projects delivered, 2+ years experience, 30M+ views generated, 20+ happy clients. Worked with big creators like Jake Sweet, Louie Sweet, Scout, Payal Gaming and more."
+    },
+    {
+      "keywords": ["payment", "pay", "paypal", "wise", "upi", "bank", "transfer", "advance", "deposit"],
+      "answer": "Payment methods: PayPal, Wise, UPI, direct bank transfer. Policy: 50% payment in advance before work starts; the rest on delivery."
+    },
+    {
+      "keywords": ["contact", "email", "discord", "reach", "touch", "ytjobs"],
+      "answer": "Email: cloudcreates7@gmail.com. Discord: _cloudx1. YTJobs: https://ytjobs.co/talent/profile/638933. The contact form is at the bottom of this page (\"Let's talk\")."
+    },
+    {
+      "keywords": ["location", "where", "based", "india", "remote", "worldwide"],
+      "answer": "Based in India, works remotely worldwide."
+    },
+    {
+      "keywords": ["short", "shorts", "reels", "tiktok", "vertical", "60s", "30s", "15s"],
+      "answer": "Short form editing (Shorts/Reels/TikTok): 2-3 days typical. I edit vertical videos for all platforms."
+    },
+    {
+      "keywords": ["long form", "documentary", "youtube", "20min", "10min", "hour"],
+      "answer": "Long form editing: 20min+ video about 1 week; 10min+ video about 4-5 days. Includes documentaries, YouTube videos, podcasts."
+    },
+    {
+      "keywords": ["motion graphic", "mograph", "saas", "ui animation", "storytelling", "story telling"],
+      "answer": "Motion graphics styles: SaaS and UI animation, Mograph edits, Story-telling edits. I create custom animations for tech products, apps, and brand storytelling."
+    },
+    {
+      "keywords": ["gaming", "game", "phonk", "montage", "highlight"],
+      "answer": "I edit gaming content including Phonk style edits, montages, and highlights. Common project types include Gaming, Reaction, IRL, Vlogs, Podcast."
+    },
+    {
+      "keywords": ["revision", "change", "modify", "edit", "feedback", "correction"],
+      "answer": "Revisions are included in the project scope. We'll agree on the number of revision rounds before starting. Additional revisions beyond scope are billed separately."
+    },
+    {
+      "keywords": ["file", "upload", "attach", "reference", "footage", "asset", "send"],
+      "answer": "You can attach reference files (images, PDFs, videos up to 100MB) using the attachment button in the contact form. Max 3 files per submission."
+    },
+    {
+      "keywords": ["hello", "hi", "hey", "greeting", "how are you"],
+      "answer": "Hey! I'm Cloud's assistant. Ask me about timelines, pricing, availability, services, or how we work. I'm here to help!"
+    },
+    {
+      "keywords": ["who are you", "what are you", "assistant", "bot", "ai"],
+      "answer": "I'm Cloud's portfolio assistant. I can answer questions about Diwanshu's video editing services, timelines, pricing, and availability. For complex questions, use the contact form or Discord."
+    }
+  ],
+  "fallback": "I'm not sure about that. For detailed questions, please use the contact form at the bottom of the page or reach out on Discord (_cloudx1) or email (cloudcreates7@gmail.com)."
+}

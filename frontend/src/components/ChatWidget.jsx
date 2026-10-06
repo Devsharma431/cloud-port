@@ -1,17 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, ArrowUp } from "lucide-react";
-import { streamSSE } from "../lib/sse";
+import { streamChat, SUGGESTIONS } from "../lib/chatbot";
 import { ChatMessage } from "./ChatMessage";
 
-const API = '/api';
 const SESSION_KEY = "cloud-chat-session";
-const SUGGESTIONS = [
-  "How long does a short-form edit take?",
-  "What are your rates?",
-  "Are you available full-time?",
-  "How do payments work?",
-];
 
 const getSession = () => {
   let id = localStorage.getItem(SESSION_KEY);
@@ -33,10 +26,6 @@ export const ChatWidget = () => {
   useEffect(() => {
     if (!open || sessionRef.current) return;
     sessionRef.current = getSession();
-    fetch(`${API}/ai/chat/${sessionRef.current}`)
-      .then((r) => (r.ok ? r.json() : []))
-      .then((hist) => setMessages(hist.map(({ role, content }) => ({ role, content }))))
-      .catch(() => {});
   }, [open]);
 
   useEffect(() => {
@@ -58,7 +47,7 @@ export const ChatWidget = () => {
       });
 
     try {
-      const full = await streamSSE("/ai/chat", { session_id: sessionRef.current, message }, (_, acc) => update(acc, { streaming: true }));
+      const full = await streamChat(message, (_, acc) => update(acc, { streaming: true }), { aborted: false });
       update(full);
     } catch (err) {
       update(err.message || "Something went wrong. Please try the contact form.");
@@ -89,7 +78,7 @@ export const ChatWidget = () => {
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
               <div>
                 <div className="font-heading text-lg font-semibold leading-none">Ask Cloud</div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a1a1aa] mt-1.5">Replies in seconds · Powered by Gemini</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a1a1aa] mt-1.5">Replies instantly · Powered locally</div>
               </div>
               <button onClick={() => setOpen(false)} data-testid="chat-close" aria-label="Close chat" className="text-[#a1a1aa] hover:text-white transition-colors">
                 <X size={20} />
