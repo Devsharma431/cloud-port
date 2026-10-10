@@ -29,8 +29,8 @@
       "answer": "I'm 19 years old, based in India, working remotely worldwide."
     },
     {
-      "keywords": ["experience", "project", "client", "view", "stat", "80", "30m", "20"],
-      "answer": "Stats: 80+ projects delivered, 2+ years experience, 30M+ views generated, 20+ happy clients. Worked with big creators like Jake Sweet, Louie Sweet, Scout, Payal Gaming and more."
+      "keywords": ["experience", "project", "client", "view", "stat", "80", "50m", "20"],
+      "answer": "Stats: 80+ projects delivered, 2+ years experience, 50M+ views generated, 20+ happy clients. Worked with big creators like Jake Sweet, Louie Sweet, Scout, Payal Gaming and more."
     },
     {
       "keywords": ["payment", "pay", "paypal", "wise", "upi", "bank", "transfer", "advance", "deposit"],
@@ -71,6 +71,42 @@
     {
       "keywords": ["hello", "hi", "hey", "greeting", "how are you"],
       "answer": "Hey! I'm Cloud's assistant. Ask me about timelines, pricing, availability, services, or how we work. I'm here to help!"
+    },
+    {
+      "keywords": ["who is cloud", "who is diwanshu", "cloud real name", "who is the editor", "who is the creator"],
+      "answer": "Cloud is the brand name of Diwanshu, a 19‑year‑old freelance video editor & motion designer from India. He works remotely worldwide and has delivered 80+ projects with 50M+ views."
+    },
+    {
+      "keywords": ["what is cloud", "what does cloud do", "cloud brand", "cloud portfolio"],
+      "answer": "Cloud is the personal brand of Diwanshu, a freelance video editor & motion designer offering long‑form editing, short‑form editing (Shorts/Reels/TikTok), motion graphics, UI animation, and sound design."
+    },
+    {
+      "keywords": ["where is cloud based", "cloud location", "where does cloud work"],
+      "answer": "Cloud is based in India and works remotely with clients worldwide."
+    },
+    {
+      "keywords": ["how to contact cloud", "contact cloud", "reach cloud", "email cloud", "discord cloud"],
+      "answer": "You can reach Cloud via email at cloudcreates7@gmail.com, Discord _cloudx1, or the contact form at the bottom of this page."
+    },
+    {
+      "keywords": ["what services does cloud offer", "services offered", "what can cloud do"],
+      "answer": "Cloud offers long‑form editing, short‑form editing (Shorts/Reels/TikTok), motion graphics (SaaS/UI, mograph, storytelling), UI animation, and sound design."
+    },
+    {
+      "keywords": ["what tools does cloud use", "software cloud uses", "cloud software"],
+      "answer": "Cloud uses After Effects, Higgsfield, Premiere Pro, Photoshop, Adobe Podcast, Topaz, Audacity, Canva, and Frame.io."
+    },
+    {
+      "keywords": ["how much does cloud charge", "cloud pricing", "cloud rates", "cost of cloud"],
+      "answer": "Rates depend on project scope. Budget tiers: Below $100, Below $500, Below $1000, $1000+. Exact quote after discussing details. 50% upfront, rest on delivery. Payments via PayPal, Wise, UPI, bank transfer."
+    },
+    {
+      "keywords": ["cloud availability", "is cloud available", "hire cloud", "cloud full time"],
+      "answer": "Yes, Cloud is available for one‑off projects and as a full‑time video editor. Usually online 2‑3 PM to 6‑7 AM IST. Fastest reply on Discord: _cloudx1."
+    },
+    {
+      "keywords": ["cloud experience", "cloud stats", "cloud projects", "cloud views"],
+      "answer": "Cloud has delivered 80+ projects, 2+ years experience, generated 50M+ views, and has 20+ happy clients. Worked with creators like Jake Sweet, Louie Sweet, Scout, Payal Gaming."
     },
     {
       "keywords": ["who are you", "what are you", "assistant", "bot", "ai"],

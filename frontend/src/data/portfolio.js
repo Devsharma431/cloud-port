@@ -26,7 +26,7 @@ export const PROFILE = {
 export const STATS = [
   { value: "80+", label: "Projects delivered" },
   { value: "2+", label: "Years of Experience" },
-  { value: "30M+", label: "Views generated" },
+  { value: "50M+", label: "Views generated" },
   { value: "20+", label: "Happy Clients" },
 ];
 

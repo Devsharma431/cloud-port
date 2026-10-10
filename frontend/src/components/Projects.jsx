@@ -40,11 +40,6 @@ export const Projects = () => {
     [current, sub]
   );
 
-  const switchType = (k) => {
-    setMainType(k);
-    setSub("All");
-  };
-
   return (
     <section id="work" className="relative z-10 py-24 md:py-32 px-6 md:px-12 lg:px-24">
       <div className="mb-12">
@@ -58,37 +53,6 @@ export const Projects = () => {
           Projects
         </motion.h2>
       </div>
-
-      {/* Main type toggle */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.5 }}
-        className="flex flex-wrap items-center gap-3 mb-6"
-      >
-        {TYPES.map((t) => (
-          <motion.button
-            key={t.k}
-            onClick={() => switchType(t.k)}
-            data-testid={`type-${t.k}`}
-            data-cursor
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`relative rounded-full px-6 py-3 text-sm md:text-base font-medium transition-colors duration-300 ${
-              mainType === t.k ? "text-black" : "text-[#a1a1aa] hover:text-white border border-white/15"
-            }`}
-          >
-            <motion.span
-              layoutId="type-pill"
-              className="absolute inset-0 rounded-full bg-white"
-              transition={{ type: "spring", stiffness: 400, damping: 35 }}
-            >
-              {mainType === t.k && <span className="relative z-10">{t.label}</span>}
-            </motion.span>
-            <span className="relative z-10">{mainType !== t.k && t.label}</span>
-          </motion.button>
-        ))}
-      </motion.div>
 
       {/* Sub filters */}
       <motion.div
